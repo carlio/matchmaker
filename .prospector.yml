@@ -7,6 +7,7 @@ max-line-length: 160
 
 ignore-paths:
   - docs/
+  - example/
 
 frosted:
   run: false
