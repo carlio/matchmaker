@@ -33,3 +33,9 @@ pep257:
     - D205
     - D400
     - D401
+
+vulture:
+  run: true
+
+pyroma:
+  run: true
