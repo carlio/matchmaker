@@ -19,13 +19,16 @@ class Instrument(models.Model):
         return "%s (%s)" % (self.label, self.name)
 
 
-class OrderBook(models.Model):
+class Market(models.Model):
 
-    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE)
-    """ What instrument is being traded """
+    side_a = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name="markets_by_side_a")
+    """ The instrument being traded """
+
+    side_b = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name="markets_by_side_b")
+    """ The instrument being traded """
 
     def __str__(self):
-        return "Order book for %s" % self.instrument
+        return "Market for %s/%s" % (self.side_a, self.side_b)
 
 
 class Order(models.Model):
@@ -36,8 +39,8 @@ class Order(models.Model):
     placed_at = models.DateTimeField(auto_now_add=True)
     """ When the order was placed """
 
-    book = models.ForeignKey(OrderBook, on_delete=models.CASCADE)
-    """ Which order book this order belongs to """
+    market = models.ForeignKey(Market, on_delete=models.CASCADE)
+    """ Which market order book this order belongs to """
 
     side = models.SmallIntegerField(choices=OrderSide.choices)
     """ Whether the order is a bid(buy) or an ask(sell) """
@@ -50,3 +53,6 @@ class Order(models.Model):
 
     filled_quantity = models.DecimalField(max_digits=10, decimal_places=5, default=0)
     """ How much of the order has been filled so far """
+
+    def __str__(self):
+        return "%s %s %s at %s for %s" % (self.get_side_display(), self.total_quantity, self.market.side_b, self.price, self.market.side_a)

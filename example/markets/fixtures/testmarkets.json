@@ -1,0 +1,26 @@
+[
+  {
+    "model": "matchmaker.instrument",
+    "pk": 1,
+    "fields": {
+      "label": "DCK",
+      "name": "Ducks"
+    }
+  },
+  {
+    "model": "matchmaker.instrument",
+    "pk": 2,
+    "fields": {
+      "label": "CPD",
+      "name": "Cupboards"
+    }
+  },
+  {
+    "model": "matchmaker.market",
+    "pk": 1,
+    "fields": {
+      "side_a": 1,
+      "side_b": 2
+     }
+  }
+]
